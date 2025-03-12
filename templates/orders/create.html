@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Checkout - Botanica{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <h2>Checkout</h2>
+        <form method="post" class="order-form">
+            {% csrf_token %}
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h4>Your Information</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form.first_name.label_tag }}
+                            {{ form.first_name }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form.last_name.label_tag }}
+                            {{ form.last_name }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form.email.label_tag }}
+                            {{ form.email }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form.phone.label_tag }}
+                            {{ form.phone }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h4>Delivery Address</h4>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        {{ form.address_line1.label_tag }}
+                        {{ form.address_line1 }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.address_line2.label_tag }}
+                        {{ form.address_line2 }}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form.town_or_city.label_tag }}
+                            {{ form.town_or_city }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form.county.label_tag }}
+                            {{ form.county }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {{ form.eircode.label_tag }}
+                        {{ form.eircode }}
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-success btn-lg">Proceed to Payment</button>
+        </form>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4>Order Summary</h4>
+            </div>
+            <div class="card-body">
+                {% if cart %}
+                    <ul class="list-group mb-3">
+                        {% for item in cart %}
+                            <li class="list-group-item d-flex justify-content-between lh-sm">
+                                <div>
+                                    <h6 class="my-0">{{ item.name }} × {{ item.quantity }}</h6>
+                                    <small class="text-muted">{{ item.price }} each</small>
+                                </div>
+                                <span class="text-muted">€{{ item.total_price }}</span>
+                            </li>
+                        {% endfor %}
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Total</span>
+                            <strong>€{{ cart.get_total_price }}</strong>
+                        </li>
+                    </ul>
+                {% else %}
+                    <p>Your cart is empty.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

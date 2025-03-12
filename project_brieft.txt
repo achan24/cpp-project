@@ -1,0 +1,127 @@
+PROJECT BRIEF
+For this assignment, you are required to develop a complex dynamic cloud-based
+application through selecting relevant cloud related architectural patterns and cloud-based
+services. Your application must be deployed and hosted on a public cloud platform.
+Once you have decided what your application will do, you should go through the following
+process:
+• Define requirements: formally describe the functional and non-functional
+requirements of your application.
+• Critically analyze and document the architecture of your cloud-based application.
+
+IMPORTANT: It is your responsibility to avoid plagiarism. Please read the comprehensive
+guidelines on academic honesty and academic integrity, and how to avoid plagiarism made
+available by the NCI Library (https://libguides.ncirl.ie/referencingandavoidingplagiarism ).
+NOTE: YOU ARE NOT ALLOWED TO PUBLISH THIS ASSIGNMENT BRIEF OR A PART THERE OF
+ON ANY WEBSITES. YOU ARE NOT ALLOWED TO PUBLISH/SHARE YOUR
+SOLUTION WITH OTHERS. All work submitted should be your own.
+
+Note that all submissions will be electronically screened (via Turnitin) for evidence of academic
+misconduct (i.e., plagiarism and collusion).
+• Implement a cloud-based application that addresses the requirements defined
+above. This application must employ several cloud services programmatically, and
+must use at least one new library that you create in an object oriented programming
+language. The new library should provide meaningful functionality to your
+application.
+• Ensure that you are developing your application to take advantage of suitable cloud
+architectural patterns.
+• Deploy your application to a suitable public cloud platform. The deployed application
+must not be modified after the submission deadline.
+• You must conduct some independent research and include any relevant
+bibliography.
+On completion, you will document the process and reflect on it through the deliverables
+listed in the next section.
+
+Project Deliverables
+You are required to document the process of developing the cloud-based application and
+reflect on it through the deliverables listed below. You have to submit the following
+deliverables through Moodle:
+
+1. A project report (6-8 pages, every additional page will incur a penalty of 10%,
+formatted using the IEEE Conference double-column template1) which should include:
+• Abstract – a 150-300-word executive summary of the project and the main results
+• Introduction – motivation for your project and its main objectives.
+• Project specification and requirements.
+• Architecture and design aspects of your application – critically analyze and
+document the architecture of your cloud-based application. Provide an
+architecture diagram of your application which includes the different cloud-based
+services used in the application/system.
+• Library description
+• Cloud-based services used in the application, which includes critical analysis and
+justification for the choice of services.
+• Implementation.
+• Continuous integration, delivery and deployment of your application.
+• Conclusions including findings/interpretations – what did you learn and find out?
+Include a short reflection on developing this project.
+• References – a complete list of academic works and/or online materials used in
+the project. References should be included as in-text citations using the IEEE
+referencing style.
+• The NCI Project submission coversheet is not included in the page count.
+
+2. The source code artefacts submission (a ZIP file) should include:
+• Source code of the application (including comments).
+• Source code of the library (including comments).
+• A readme.txt file that that includes all the dependencies required and the
+deployment steps and configuration files.
+
+3. Project presentation and demonstration, to be held in class during the
+submission week as per the CA schedule. It should include the following:
+• A concise presentation of the motivation and high-level description of the project.
+• Demonstration – give a demonstration of your application’s highlighting the main
+features.
+• Maximum 5 minutes, every 30 seconds over 5 minutes will incur a penalty of 20%
+
+
+Assessment Criteria
+
+Grading Criteria for Cloud-Based Application Project
+Architecture & Design (15%)
+
+H1 (> 70%): Clearly defined, well-presented, and critically analyzed architecture and design.
+H2.1 (> 60%): Created, well-presented, and analyzed architecture and design.
+H2.2 (> 50%): Created and presented, but missing critical analysis.
+Pass (> 40%): Created and presented with minimal information.
+Fail (< 40%): No architecture diagram created or presented.
+Cloud Services (15%)
+
+H1 (> 70%): Very good number of relevant cloud services used, critically analyzed, justified, and well explained in both the report and architectural diagram.
+H2.1 (> 60%): Good number of relevant cloud services used, critically analyzed, justified, and explained in both the report and architectural diagram.
+H2.2 (> 50%): Adequate cloud services used with explanations in the report and architectural diagram.
+Pass (> 40%): Minimum services used with very little information provided.
+Fail (< 40%): Very few cloud services used, with no explanation.
+Library Creation (15%)
+
+H1 (> 70%): Library created with all required aspects and elements, rationale explained, and successfully published.
+H2.1 (> 60%): Library created with all required aspects and rationale provided.
+H2.2 (> 50%): Attempt made to create a library with basic functionality.
+Pass (> 40%): Attempt made but not successfully implemented.
+Fail (< 40%): No library created.
+Implementation (25%)
+
+H1 (> 70%): Excellent implementation of application functionalities, including both functional and non-functional requirements.
+All CRUD operations implemented successfully.
+Well-written source code with comments and explanations.
+H2.1 (> 60%): Very good implementation of functionalities, including functional and non-functional requirements.
+All CRUD operations implemented.
+Well-written source code with comments/explanations.
+H2.2 (> 50%): Good implementation of functionalities.
+All CRUD operations implemented.
+Source code follows basic constructs.
+Pass (> 40%): CRUD operations implemented but not showing required outputs.
+Source code follows basic constructs.
+Fail (< 40%): Less than required functionalities implemented.
+Deployment (10%)
+
+H1 (> 70%): Application deployed on a suitable public cloud platform.
+All functionalities work properly on the deployed URL.
+H2.1 (> 60%): Application deployed on a suitable cloud platform.
+Some functionalities work on the deployed URL.
+H2.2 (> 50%): Efforts made to deploy the application, but it is not working properly.
+Pass (> 40%): Efforts made to deploy the application, but deployment was unsuccessful.
+Fail (< 40%): No efforts made to deploy the application.
+Conclusion & Findings (10%)
+
+H1 (> 70%): Insightful conclusions that appreciate the limitations and implications of the study.
+H2.1 (> 60%): Conclusions appreciate the limitations and implications of the study.
+H2.2 (> 50%): Shows an understanding of the study’s implications.
+Pass (> 40%): Implications and limitations of the study are not fully appreciated.
+Fail (< 40%): No or inappropriate conclusions provided.
