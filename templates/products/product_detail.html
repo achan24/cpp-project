@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'products:product_list' %}">Products</a></li>
+      <li class="breadcrumb-item"><a href="{{ product.category.get_absolute_url }}">{{ product.category.name }}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <!-- Product Image -->
+    <div class="col-md-6 mb-4">
+      <div class="card">
+        {% if product.image %}
+          <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+        {% else %}
+          <img src="{% static 'images/no_image.png' %}" class="card-img-top" alt="No image available">
+        {% endif %}
+      </div>
+    </div>
+    
+    <!-- Product Information -->
+    <div class="col-md-6">
+      <h1 class="mb-3">{{ product.name }}</h1>
+      <p class="text-muted">{{ product.category.name }}</p>
+      
+      <div class="mb-3">
+        <span class="badge bg-{{ product.difficulty|lower }} me-2">{{ product.difficulty }}</span>
+        {% if product.stock > 0 %}
+          <span class="badge bg-success">In Stock</span>
+        {% else %}
+          <span class="badge bg-danger">Out of Stock</span>
+        {% endif %}
+      </div>
+      
+      <h3 class="text-success mb-4">€{{ product.price }}</h3>
+      
+      <p class="lead mb-4">{{ product.description }}</p>
+      
+      {% if product.stock > 0 %}
+        <form method="post" action="{% url 'cart:add_to_cart' product.id %}" class="mb-4">
+          {% csrf_token %}
+          <div class="row g-3 align-items-center">
+            <div class="col-auto">
+              <label for="quantity" class="col-form-label">Quantity</label>
+            </div>
+            <div class="col-auto">
+              <input type="number" id="quantity" name="quantity" class="form-control" value="1" min="1" max="{{ product.stock }}">
+            </div>
+            <div class="col-auto">
+              <button type="submit" class="btn btn-success">
+                <i class="bi bi-cart-plus"></i> Add to Cart
+              </button>
+            </div>
+          </div>
+        </form>
+      {% else %}
+        <div class="alert alert-warning mb-4">
+          This product is currently out of stock. Please check back later.
+        </div>
+      {% endif %}
+      
+      <div class="accordion" id="productAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="careInstructionsHeading">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#careInstructions" aria-expanded="true" aria-controls="careInstructions">
+              Care Instructions
+            </button>
+          </h2>
+          <div id="careInstructions" class="accordion-collapse collapse show" aria-labelledby="careInstructionsHeading" data-bs-parent="#productAccordion">
+            <div class="accordion-body">
+              {{ product.care_instructions|linebreaks }}
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="shippingHeading">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#shipping" aria-expanded="false" aria-controls="shipping">
+              Shipping Information
+            </button>
+          </h2>
+          <div id="shipping" class="accordion-collapse collapse" aria-labelledby="shippingHeading" data-bs-parent="#productAccordion">
+            <div class="accordion-body">
+              <p>We ship to all counties in Ireland. Standard delivery takes 2-4 business days.</p>
+              <p>Free shipping on orders over €50.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="returnsHeading">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#returns" aria-expanded="false" aria-controls="returns">
+              Returns & Guarantees
+            </button>
+          </h2>
+          <div id="returns" class="accordion-collapse collapse" aria-labelledby="returnsHeading" data-bs-parent="#productAccordion">
+            <div class="accordion-body">
+              <p>All plants come with a 14-day guarantee. If your plant arrives damaged or dies within 14 days of delivery, we'll replace it free of charge.</p>
+              <p>Please contact our customer service team with photos of the plant for assistance.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Related Products -->
+  {% if related_products %}
+    <div class="mt-5">
+      <h3 class="mb-4">You might also like</h3>
+      <div class="row row-cols-1 row-cols-md-4 g-4">
+        {% for related in related_products %}
+          <div class="col">
+            <div class="card h-100 shadow-sm">
+              {% if related.image %}
+                <img src="{{ related.image.url }}" class="card-img-top" alt="{{ related.name }}">
+              {% else %}
+                <img src="{% static 'images/no_image.png' %}" class="card-img-top" alt="No image available">
+              {% endif %}
+              <div class="card-body">
+                <h5 class="card-title">{{ related.name }}</h5>
+                <p class="card-text text-muted">{{ related.category.name }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="badge bg-{{ related.difficulty|lower }}">
+                    {{ related.difficulty }}
+                  </span>
+                  <span class="text-success fw-bold">€{{ related.price }}</span>
+                </div>
+              </div>
+              <div class="card-footer bg-transparent">
+                <div class="d-grid">
+                  <a href="{{ related.get_absolute_url }}" class="btn btn-outline-success">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

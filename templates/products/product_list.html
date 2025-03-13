@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  {% if category %}{{ category.name }}{% else %}Products{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <!-- Sidebar with categories and filters -->
+    <div class="col-md-3">
+      <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+          <h4>Categories</h4>
+        </div>
+        <div class="list-group list-group-flush">
+          <a href="{% url 'products:product_list' %}" class="list-group-item list-group-item-action {% if not category %}active{% endif %}">
+            All Plants
+          </a>
+          {% for c in categories %}
+            <a href="{{ c.get_absolute_url }}" class="list-group-item list-group-item-action {% if category.id == c.id %}active{% endif %}">
+              {{ c.name }}
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+      
+      <!-- Filters -->
+      <div class="card">
+        <div class="card-header bg-success text-white">
+          <h4>Filters</h4>
+        </div>
+        <div class="card-body">
+          <form method="get">
+            <div class="mb-3">
+              <label for="difficulty" class="form-label">Difficulty Level</label>
+              <select name="difficulty" id="difficulty" class="form-select">
+                <option value="">All Levels</option>
+                <option value="easy" {% if selected_difficulty == 'easy' %}selected{% endif %}>Easy</option>
+                <option value="medium" {% if selected_difficulty == 'medium' %}selected{% endif %}>Medium</option>
+                <option value="hard" {% if selected_difficulty == 'hard' %}selected{% endif %}>Hard</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="sort" class="form-label">Sort By</label>
+              <select name="sort" id="sort" class="form-select">
+                <option value="name" {% if selected_sort == 'name' %}selected{% endif %}>Name</option>
+                <option value="price_low" {% if selected_sort == 'price_low' %}selected{% endif %}>Price: Low to High</option>
+                <option value="price_high" {% if selected_sort == 'price_high' %}selected{% endif %}>Price: High to Low</option>
+                <option value="newest" {% if selected_sort == 'newest' %}selected{% endif %}>Newest</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Apply Filters</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Product listing -->
+    <div class="col-md-9">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">
+          {% if category %}
+            {{ category.name }}
+          {% else %}
+            All Plants
+          {% endif %}
+        </h2>
+        <span class="text-muted">{{ products|length }} products found</span>
+      </div>
+      
+      {% if category %}
+        <p class="lead mb-4">{{ category.description }}</p>
+      {% endif %}
+      
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for product in products %}
+          <div class="col">
+            <div class="card h-100 shadow-sm">
+              {% if product.image %}
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+              {% else %}
+                <img src="{% static 'images/no_image.png' %}" class="card-img-top" alt="No image available">
+              {% endif %}
+              <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text text-muted">{{ product.category.name }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="badge bg-{{ product.difficulty|lower }}">
+                    {{ product.difficulty }}
+                  </span>
+                  <span class="text-success fw-bold">€{{ product.price }}</span>
+                </div>
+              </div>
+              <div class="card-footer bg-transparent">
+                <div class="d-grid">
+                  <a href="{{ product.get_absolute_url }}" class="btn btn-outline-success">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% empty %}
+          <div class="col-12">
+            <div class="alert alert-info">
+              No products found matching your criteria. Try adjusting your filters.
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

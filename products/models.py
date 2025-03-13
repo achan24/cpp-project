@@ -11,6 +11,9 @@ class Category(models.Model):
     
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse('products:product_list_by_category', args=[self.id])
 
 class Plant(models.Model):
     DIFFICULTY_CHOICES = (
@@ -35,4 +38,4 @@ class Plant(models.Model):
         return self.name
     
     def get_absolute_url(self):
-        return reverse('products:plant_detail', args=[self.id])
+        return reverse('products:product_detail', args=[self.id])
