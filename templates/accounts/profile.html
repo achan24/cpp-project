@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}My Profile | Botanica{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h4>My Account</h4>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="{% url 'accounts:profile' %}" class="list-group-item list-group-item-action active">
+                        <i class="fas fa-user-circle me-2"></i> Profile
+                    </a>
+                    <a href="{% url 'accounts:order_history' %}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-shopping-bag me-2"></i> Order History
+                    </a>
+                    <a href="{% url 'accounts:password_change' %}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-key me-2"></i> Change Password
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Profile Form -->
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0">My Profile</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h5>Account Information</h5>
+                            <p><strong>Username:</strong> {{ user.username }}</p>
+                            <p><strong>Email:</strong> {{ user.email }}</p>
+                            <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+                        </div>
+                    </div>
+                    
+                    <h5>Shipping Address</h5>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.address_line1.id_for_label }}" class="form-label">Address Line 1</label>
+                                    {{ form.address_line1 }}
+                                    {% if form.address_line1.errors %}
+                                        <div class="text-danger">{{ form.address_line1.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="{{ form.address_line2.id_for_label }}" class="form-label">Address Line 2</label>
+                                    {{ form.address_line2 }}
+                                    {% if form.address_line2.errors %}
+                                        <div class="text-danger">{{ form.address_line2.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="{{ form.town_or_city.id_for_label }}" class="form-label">Town/City</label>
+                                    {{ form.town_or_city }}
+                                    {% if form.town_or_city.errors %}
+                                        <div class="text-danger">{{ form.town_or_city.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.county.id_for_label }}" class="form-label">County</label>
+                                    {{ form.county }}
+                                    {% if form.county.errors %}
+                                        <div class="text-danger">{{ form.county.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="{{ form.eircode.id_for_label }}" class="form-label">Eircode</label>
+                                    {{ form.eircode }}
+                                    {% if form.eircode.errors %}
+                                        <div class="text-danger">{{ form.eircode.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="{{ form.phone.id_for_label }}" class="form-label">Phone</label>
+                                    {{ form.phone }}
+                                    {% if form.phone.errors %}
+                                        <div class="text-danger">{{ form.phone.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success mt-3">Update Profile</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

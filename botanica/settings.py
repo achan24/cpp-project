@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     # Third-party apps
-    'crispy_forms',
     
     # Project apps
     'products.apps.ProductsConfig',
@@ -142,9 +141,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Crispy Forms
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Login/Logout URLs
 LOGIN_REDIRECT_URL = '/'
