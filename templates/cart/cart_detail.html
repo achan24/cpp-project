@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Your Shopping Cart{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h1 class="mb-4">Your Shopping Cart</h1>
+  
+  {% if messages %}
+    <div class="messages mb-4">
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+  
+  {% if cart_items %}
+    <div class="row">
+      <!-- Cart Items -->
+      <div class="col-lg-8">
+        <div class="card shadow-sm mb-4">
+          <div class="card-header bg-success text-white">
+            <h5 class="mb-0">Cart Items ({{ cart_items|length }})</h5>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-hover mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for item in cart_items %}
+                    <tr>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          {% if item.image %}
+                            <img src="{{ item.image }}" alt="{{ item.name }}" class="img-thumbnail me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                          {% else %}
+                            <img src="{% static 'images/no_image.png' %}" alt="No image" class="img-thumbnail me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                          {% endif %}
+                          <div>
+                            <h6 class="mb-0">{{ item.name }}</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="align-middle">€{{ item.price }}</td>
+                      <td class="align-middle">
+                        <form method="post" action="{% url 'cart:cart_update' item.plant_id %}" class="d-flex align-items-center">
+                          {% csrf_token %}
+                          <div class="input-group input-group-sm" style="width: 120px;">
+                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="10" class="form-control">
+                            <button type="submit" class="btn btn-sm btn-outline-success">
+                              <i class="bi bi-arrow-repeat"></i>
+                            </button>
+                          </div>
+                        </form>
+                      </td>
+                      <td class="align-middle">€{{ item.total_price }}</td>
+                      <td class="align-middle">
+                        <a href="{% url 'cart:cart_remove' item.plant_id %}" class="btn btn-sm btn-danger">
+                          <i class="bi bi-trash"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+        <div class="d-flex justify-content-between mb-4">
+          <a href="{% url 'products:product_list' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Continue Shopping
+          </a>
+        </div>
+      </div>
+      
+      <!-- Order Summary -->
+      <div class="col-lg-4">
+        <div class="card shadow-sm">
+          <div class="card-header bg-success text-white">
+            <h5 class="mb-0">Order Summary</h5>
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between mb-2">
+              <span>Subtotal:</span>
+              <span>€{{ subtotal }}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <span>Shipping:</span>
+              {% if shipping_cost > 0 %}
+                <span>€{{ shipping_cost }}</span>
+              {% else %}
+                <span class="text-success">Free</span>
+              {% endif %}
+            </div>
+            {% if shipping_cost > 0 %}
+              <div class="alert alert-info small mb-3">
+                <i class="bi bi-info-circle"></i> Free shipping on orders over €50
+              </div>
+            {% endif %}
+            <hr>
+            <div class="d-flex justify-content-between mb-3">
+              <strong>Total:</strong>
+              <strong class="text-success">€{{ total }}</strong>
+            </div>
+            <a href="{% url 'orders:order_create' %}" class="btn btn-success w-100">
+              Proceed to Checkout
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="card shadow-sm">
+      <div class="card-body text-center py-5">
+        <i class="bi bi-cart-x" style="font-size: 4rem; color: #6c757d;"></i>
+        <h3 class="mt-3">Your cart is empty</h3>
+        <p class="text-muted">Looks like you haven't added any plants to your cart yet.</p>
+        <a href="{% url 'products:product_list' %}" class="btn btn-success mt-3">
+          <i class="bi bi-shop"></i> Browse Plants
+        </a>
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
