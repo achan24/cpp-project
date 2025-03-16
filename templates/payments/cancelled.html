@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Payment Cancelled - Botanica{% endblock %}
+
+{% block extra_css %}
+<style>
+    .cancelled-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        text-align: center;
+    }
+    .cancelled-icon {
+        color: #dc3545;
+        font-size: 80px;
+        margin-bottom: 20px;
+    }
+    .action-buttons {
+        margin-top: 30px;
+    }
+    .action-buttons a {
+        margin: 0 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="cancelled-container">
+                <div class="cancelled-icon">
+                    <i class="fas fa-times-circle"></i>
+                </div>
+                
+                <h1 class="mb-3">Payment Cancelled</h1>
+                <p class="lead">Your payment has been cancelled. No charges have been made to your account.</p>
+                
+                <p>If you experienced any issues during the payment process, please try again or contact our customer support team for assistance.</p>
+                
+                <div class="action-buttons">
+                    <a href="{% url 'cart:cart_detail' %}" class="btn btn-primary">Return to Cart</a>
+                    <a href="{% url 'products:product_list' %}" class="btn btn-outline-secondary">Continue Shopping</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

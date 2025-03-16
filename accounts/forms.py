@@ -52,7 +52,7 @@ class UserProfileForm(forms.ModelForm):
             'address_line1': forms.TextInput(attrs={'class': 'form-control'}),
             'address_line2': forms.TextInput(attrs={'class': 'form-control'}),
             'town_or_city': forms.TextInput(attrs={'class': 'form-control'}),
-            'county': forms.TextInput(attrs={'class': 'form-control'}),
+            'county': forms.Select(attrs={'class': 'form-control'}),
             'eircode': forms.TextInput(attrs={'class': 'form-control'}),
             'phone': forms.TextInput(attrs={'class': 'form-control'}),
         }

@@ -19,4 +19,5 @@ class OrderCreateForm(forms.ModelForm):
         self.fields['address_line2'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Address Line 2 (Optional)'})
         self.fields['town_or_city'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Town or City'})
         self.fields['county'].widget.attrs.update({'class': 'form-control'})
-        self.fields['eircode'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Eircode'})
+        self.fields['eircode'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Eircode (Optional)'})
+        self.fields['eircode'].required = False

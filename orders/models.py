@@ -56,7 +56,7 @@ class Order(models.Model):
     address_line2 = models.CharField(max_length=250, blank=True)
     town_or_city = models.CharField(max_length=100)
     county = models.CharField(max_length=50, choices=COUNTY_CHOICES)
-    eircode = models.CharField(max_length=8)
+    eircode = models.CharField(max_length=8, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')

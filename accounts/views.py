@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import CustomUserCreationForm, UserProfileForm
 from .models import UserProfile
+from .utils import verify_email_with_ses
 
 def register(request):
     """
@@ -16,6 +17,18 @@ def register(request):
             user = form.save()
             # Create an empty profile for the user
             UserProfile.objects.create(user=user)
+            
+            # Verify the user's email with Amazon SES
+            email = form.cleaned_data.get('email')
+            verification_sent, error_message = verify_email_with_ses(email)
+            
+            if verification_sent:
+                messages.info(request, 'A verification email has been sent to your email address. '
+                             'Please check your inbox and click the verification link to receive order confirmations.')
+            else:
+                messages.warning(request, f'We could not send a verification email at this time: {error_message} '
+                               'You may not receive order confirmations until your email is verified.')
+            
             # Log the user in
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')

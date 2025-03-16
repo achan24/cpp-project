@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}About Us | Botanica{% endblock %}
+
+{% block extra_css %}
+<style>
+    .about-header {
+        background-color: #f8f9fa;
+        padding: 60px 0;
+        margin-bottom: 40px;
+    }
+    .about-section {
+        margin-bottom: 60px;
+    }
+    .team-member {
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    .team-member img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-bottom: 20px;
+    }
+    .values-icon {
+        font-size: 3rem;
+        color: #4CAF50;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- About Header -->
+<div class="about-header text-center">
+    <div class="container">
+        <h1 class="display-4">About Botanica</h1>
+        <p class="lead">Ireland's premier online plant shop, bringing nature to your doorstep since 2020.</p>
+    </div>
+</div>
+
+<!-- Our Story -->
+<div class="container about-section">
+    <div class="row align-items-center">
+        <div class="col-lg-6">
+            <h2>Our Story</h2>
+            <p>Botanica was born from a simple passion for plants and a desire to make quality greenery accessible to everyone in Ireland. What started as a small family business has grown into one of Ireland's most trusted online plant retailers.</p>
+            <p>Our journey began in 2020 when our founder, Albert Chan, decided to turn his lifelong passion for horticulture into a business that could bring joy and natural beauty to homes across Ireland.</p>
+            <p>Today, we pride ourselves on offering a carefully curated selection of indoor and outdoor plants, delivered with care right to your doorstep.</p>
+        </div>
+        <div class="col-lg-6">
+            <img src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" class="img-fluid rounded" alt="Botanica nursery">
+        </div>
+    </div>
+</div>
+
+<!-- Our Mission -->
+<div class="container about-section bg-light p-5 rounded">
+    <div class="text-center mb-5">
+        <h2>Our Mission</h2>
+        <p class="lead">To bring the joy and benefits of plants to every Irish home, while promoting sustainable and eco-friendly practices.</p>
+    </div>
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <div class="values-icon">
+                <i class="fas fa-leaf"></i>
+            </div>
+            <h3>Quality</h3>
+            <p>We source only the healthiest plants and ensure they're delivered in perfect condition.</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="values-icon">
+                <i class="fas fa-globe-europe"></i>
+            </div>
+            <h3>Sustainability</h3>
+            <p>Our eco-friendly packaging and growing practices minimize our environmental impact.</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="values-icon">
+                <i class="fas fa-hands-helping"></i>
+            </div>
+            <h3>Community</h3>
+            <p>We support local growers and give back to environmental conservation efforts in Ireland.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Testimonials -->
+<div class="container about-section bg-light p-5 rounded">
+    <h2 class="text-center mb-5">What Our Customers Say</h2>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                    </div>
+                    <p class="card-text">"I've ordered plants from many online shops, but Botanica stands out for quality and packaging. My fiddle leaf fig arrived in perfect condition!"</p>
+                    <p class="card-text"><small class="text-muted">— John D., Dublin</small></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                    </div>
+                    <p class="card-text">"The customer service at Botanica is exceptional. When I had questions about caring for my new monstera, they provided detailed advice that helped it thrive."</p>
+                    <p class="card-text"><small class="text-muted">— Mary L., Cork</small></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                    </div>
+                    <p class="card-text">"I love that Botanica uses eco-friendly packaging. The plants are always healthy and the delivery is quick. Highly recommend!"</p>
+                    <p class="card-text"><small class="text-muted">— Aoife M., Galway</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action -->
+<div class="container about-section text-center">
+    <h2>Ready to bring nature into your home?</h2>
+    <p class="lead mb-4">Explore our collection of carefully selected plants that will transform your space.</p>
+    <a href="/products/" class="btn btn-success btn-lg">Shop Now</a>
+</div>
+{% endblock %}

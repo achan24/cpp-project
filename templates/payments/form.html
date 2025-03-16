@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Payment - Botanica{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Complete Your Payment</h1>
+            
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h3 class="mb-0">Order Summary</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Order #:</strong> {{ order.id }}</p>
+                    <p><strong>Total Amount:</strong> €{{ order.total_price|floatformat:2 }}</p>
+                    <p><strong>Shipping Address:</strong></p>
+                    <address>
+                        {{ order.first_name }} {{ order.last_name }}<br>
+                        {{ order.address_line1 }}<br>
+                        {% if order.address_line2 %}{{ order.address_line2 }}<br>{% endif %}
+                        {{ order.town_or_city }}, {{ order.get_county_display }}{% if order.eircode %}, {{ order.eircode }}{% endif %}
+                    </address>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <form action="{% url 'payments:process' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success btn-lg">Proceed to Checkout</button>
+                </form>
+                
+                <div class="mt-3">
+                    <a href="{% url 'cart:cart_detail' %}" class="text-muted">Return to Cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
