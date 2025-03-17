@@ -146,5 +146,126 @@
       </div>
     </div>
   {% endif %}
+  
+  <!-- Reviews Section -->
+  <div class="mt-5 mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h3>Customer Reviews</h3>
+      {% if user.is_authenticated %}
+        {% if user_review %}
+          <a href="{% url 'reviews:edit_review' review_id=user_review.id %}" class="btn btn-outline-primary">
+            <i class="bi bi-pencil"></i> Edit Your Review
+          </a>
+        {% elif user_has_purchased %}
+          <a href="{% url 'reviews:add_review' product_id=product.id %}" class="btn btn-success">
+            <i class="bi bi-star"></i> Write a Review
+          </a>
+        {% else %}
+          <div class="alert alert-info mb-0">
+            <small>You can only review products you've purchased</small>
+          </div>
+        {% endif %}
+      {% else %}
+        <a href="{% url 'accounts:login' %}?next={% url 'products:product_detail' id=product.id %}" class="btn btn-outline-success">
+          <i class="bi bi-box-arrow-in-right"></i> Login to Review
+        </a>
+      {% endif %}
+    </div>
+    
+    {% if total_reviews > 0 %}
+      <!-- Average Rating -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-md-3 text-center">
+              <h2 class="display-4 mb-0">{{ avg_rating|floatformat:1 }}</h2>
+              <div class="mb-2">
+                {% include "reviews/stars.html" with rating=avg_rating %}
+              </div>
+              <p class="text-muted mb-0">{{ total_reviews }} review{{ total_reviews|pluralize }}</p>
+            </div>
+            <div class="col-md-9">
+              <div class="rating-bars">
+                {% for rating, data in rating_counts.items %}
+                  <div class="rating-bar-container mb-2">
+                    <div class="d-flex align-items-center">
+                      <span class="me-2">{{ rating }} star{{ rating|pluralize }}</span>
+                      <div class="progress flex-grow-1" style="height: 8px;">
+                        <div class="progress-bar bg-success" role="progressbar" 
+                             style="width: {{ data.percentage }}%;" 
+                             aria-valuenow="{{ data.percentage }}" 
+                             aria-valuemin="0" 
+                             aria-valuemax="100"></div>
+                      </div>
+                      <span class="ms-2 text-muted small">{{ data.count }}</span>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Review Filters -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <form method="get" id="review-filter-form" class="row g-3">
+            <div class="col-md-6">
+              <label for="rating-filter" class="form-label">Filter by Rating</label>
+              <select id="rating-filter" name="rating" class="form-select" onchange="this.form.submit()">
+                <option value="">All Ratings</option>
+                {% for i in "54321"|make_list %}
+                  <option value="{{ i }}" {% if selected_rating == i %}selected{% endif %}>{{ i }} Star{{ i|pluralize }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="sort-reviews" class="form-label">Sort by</label>
+              <select id="sort-reviews" name="sort" class="form-select" onchange="this.form.submit()">
+                <option value="newest" {% if selected_sort == 'newest' %}selected{% endif %}>Newest First</option>
+                <option value="oldest" {% if selected_sort == 'oldest' %}selected{% endif %}>Oldest First</option>
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      <!-- Reviews List -->
+      <div class="reviews-list">
+        {% for review in reviews %}
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                  <h5 class="mb-0">{{ review.user.get_full_name|default:review.user.username }}</h5>
+                  <div class="d-flex align-items-center">
+                    {% include "reviews/stars.html" with rating=review.rating %}
+                    <span class="ms-2 text-muted">{{ review.rating }} star{{ review.rating|pluralize }}</span>
+                  </div>
+                </div>
+                <span class="badge bg-success">Verified Buyer</span>
+              </div>
+              <p class="review-text">{{ review.comment }}</p>
+              <div class="text-muted small">
+                <i class="bi bi-calendar3"></i> {{ review.created|date:"F j, Y" }}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-light text-center p-5">
+        <i class="bi bi-chat-square-text display-1 text-muted mb-3"></i>
+        <h4>No Reviews Yet</h4>
+        <p class="text-muted">Be the first to review this product!</p>
+        {% if user.is_authenticated and user_has_purchased %}
+          <a href="{% url 'reviews:add_review' product_id=product.id %}" class="btn btn-success mt-2">
+            <i class="bi bi-star"></i> Write a Review
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}

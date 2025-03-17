@@ -31,7 +31,7 @@ urlpatterns = [
     # Add other app URLs as they are developed
     path('cart/', include('cart.urls', namespace='cart')),
     path('payments/', include('payments.urls', namespace='payments')),
-    # path('reviews/', include('reviews.urls', namespace='reviews')),
+    path('reviews/', include('reviews.urls', namespace='reviews')),
 ]
 
 if settings.DEBUG:
