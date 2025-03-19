@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from .models import UserProfile
+from eircode_validator_24203203 import EircodeValidator
 
 class CustomUserCreationForm(UserCreationForm):
     """
@@ -65,3 +66,20 @@ class UserProfileForm(forms.ModelForm):
         self.fields['town_or_city'].widget.attrs['placeholder'] = 'Town or city'
         self.fields['eircode'].widget.attrs['placeholder'] = 'A65 F4E2'
         self.fields['phone'].widget.attrs['placeholder'] = '+353 XX XXX XXXX'
+        
+    def clean_eircode(self):
+        """
+        Validate the Eircode using the eircode-validator-24203203 package.
+        """
+        eircode = self.cleaned_data.get('eircode')
+        validator = EircodeValidator(allow_empty=True)
+        is_valid, error_message = validator.validate(eircode)
+        
+        if not is_valid:
+            raise forms.ValidationError(error_message)
+            
+        # Format the Eircode properly if it's valid
+        if eircode:
+            eircode = validator.format(eircode)
+            
+        return eircode

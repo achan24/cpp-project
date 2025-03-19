@@ -4,3 +4,4 @@ psycopg2-binary==2.9.9
 Pillow==10.1.0
 stripe==7.9.0
 python-dotenv==1.0.0
+eircode-validator-24203203==0.1.3
