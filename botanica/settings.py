@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     # Third-party apps
+    'storages',  # Add this for S3
     
     # Project apps
     'products.apps.ProductsConfig',
@@ -135,13 +136,40 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
-# Media files (User uploaded content)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# Media and Static file locations
+MEDIA_URL = f'https://{os.environ.get("AWS_STORAGE_BUCKET_NAME")}.s3.{os.environ.get("AWS_S3_REGION_NAME")}.amazonaws.com/media/'
+STATIC_URL = f'https://{os.environ.get("AWS_STORAGE_BUCKET_NAME")}.s3.{os.environ.get("AWS_S3_REGION_NAME")}.amazonaws.com/static/'
+
+# AWS S3 Configuration
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+
+# Use S3-specific credentials
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_S3_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_S3_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME')
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+
+# Additional required S3 settings
+AWS_S3_ADDRESSING_STYLE = 'virtual'  # Required for newer S3 regions
+AWS_S3_SIGNATURE_VERSION = 's3v4'    # Required for eu-west-1 region
+AWS_QUERYSTRING_AUTH = True          # Enable querystring auth for private files
+
+# Performance optimization for S3
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+
+# AWS Settings for SES (using original SES credentials)
+AWS_SES_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SES_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_SES_REGION = os.environ.get('AWS_REGION')
+AWS_SES_SENDER_EMAIL = os.environ.get('AWS_SES_SENDER_EMAIL')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -155,9 +183,3 @@ LOGOUT_REDIRECT_URL = '/'
 # Stripe settings
 STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY', '')
 STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
-
-# AWS Settings for SES
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', '')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '')
-AWS_REGION = os.environ.get('AWS_REGION', 'eu-west-1')  # Ireland region
-AWS_SES_SENDER_EMAIL = os.environ.get('AWS_SES_SENDER_EMAIL', 'noreply@botanica.ie')
