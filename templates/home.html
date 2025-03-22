@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Botanica - Your Irish Plant Shop{% endblock %}
 
@@ -14,7 +15,7 @@
                         <div class="col-md-8 col-lg-6">
                             <h1 class="display-4 fw-bold mb-4">Bring Nature Home</h1>
                             <p class="lead mb-4">Discover our collection of premium plants, carefully selected for Irish homes and gardens.</p>
-                            <a href="/products/" class="btn btn-success btn-lg">Shop Now</a>
+                            <a href="{% url 'products:product_list' %}" class="btn btn-success btn-lg">Shop Now</a>
                         </div>
                     </div>
                 </div>
@@ -23,81 +24,99 @@
     </div>
 </section>
 
-<!-- Featured Categories -->
+<!-- Categories -->
 <section class="py-5">
     <div class="container">
         <h2 class="text-center mb-5">Shop by Category</h2>
         <div class="row g-4">
-            <div class="col-md-4">
+            <!-- Indoor Plants -->
+            <div class="col-md-4 mb-4">
                 <div class="card h-100 border-0 shadow-sm">
-                    <img src="https://images.unsplash.com/photo-1545165375-1b744b9ed444?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" class="card-img-top" alt="Indoor Plants" style="height: 250px; object-fit: cover;">
+                    <img src="https://botanica-media-eu-west-1.s3.eu-west-1.amazonaws.com/images/categories/indoor.jpg" class="card-img-top" alt="Indoor Plants" style="height: 250px; object-fit: cover;">
                     <div class="card-body text-center">
                         <h5 class="card-title">Indoor Plants</h5>
                         <p class="card-text">Perfect for brightening up your home and improving air quality.</p>
-                        <a href="/products/?category=indoor" class="btn btn-outline-success">View Indoor Plants</a>
+                        <a href="{% url 'products:product_list_by_category' 1 %}" class="btn btn-outline-success">View Indoor Plants</a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <!-- Outdoor Plants -->
+            <div class="col-md-4 mb-4">
                 <div class="card h-100 border-0 shadow-sm">
-                    <img src="https://images.unsplash.com/photo-1599685315640-4a8c7ab8dc9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" class="card-img-top" alt="Outdoor Plants" style="height: 250px; object-fit: cover;">
+                    <img src="https://botanica-media-eu-west-1.s3.eu-west-1.amazonaws.com/images/categories/outdoor.jpg" class="card-img-top" alt="Outdoor Plants" style="height: 250px; object-fit: cover;">
                     <div class="card-body text-center">
                         <h5 class="card-title">Outdoor Plants</h5>
                         <p class="card-text">Hardy varieties that thrive in the Irish climate.</p>
-                        <a href="/products/?category=outdoor" class="btn btn-outline-success">View Outdoor Plants</a>
+                        <a href="{% url 'products:product_list_by_category' 2 %}" class="btn btn-outline-success">View Outdoor Plants</a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <!-- Succulents -->
+            <div class="col-md-4 mb-4">
                 <div class="card h-100 border-0 shadow-sm">
-                    <img src="https://images.unsplash.com/photo-1509423350716-97f9360b4e09?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" class="card-img-top" alt="Succulents" style="height: 250px; object-fit: cover;">
+                    <img src="https://botanica-media-eu-west-1.s3.eu-west-1.amazonaws.com/images/categories/succulents.jpg" class="card-img-top" alt="Succulents" style="height: 250px; object-fit: cover;">
                     <div class="card-body text-center">
                         <h5 class="card-title">Succulents</h5>
-                        <p class="card-text">Low-maintenance plants perfect for beginners and busy people.</p>
-                        <a href="/products/?category=succulents" class="btn btn-outline-success">View Succulents</a>
+                        <p class="card-text">Low-maintenance plants perfect for beginners.</p>
+                        <a href="{% url 'products:product_list_by_category' 3 %}" class="btn btn-outline-success">View Succulents</a>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-
-<!-- Featured Products -->
-<section class="py-5 bg-light">
-    <div class="container">
-        <h2 class="text-center mb-5">Featured Plants</h2>
-        <div class="row g-4">
-            {% for i in "12345" %}
-            <div class="col-md-4 col-lg-3 mb-4">
+            <!-- Herbs -->
+            <div class="col-md-4 mb-4">
                 <div class="card h-100 border-0 shadow-sm">
-                    <div class="badge bg-success position-absolute top-0 end-0 m-2">New</div>
-                    <img src="https://images.unsplash.com/photo-1614594975525-e45190c55d0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80" class="card-img-top" alt="Featured Plant" style="height: 200px; object-fit: cover;">
-                    <div class="card-body">
-                        <h5 class="card-title">Monstera Deliciosa</h5>
-                        <p class="text-muted">Indoor Plant</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="h5 mb-0">€24.99</span>
-                            <div>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star-half-alt text-warning"></i>
-                                <span class="small text-muted">(4.5)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer bg-white border-top-0">
-                        <div class="d-grid">
-                            <a href="/products/1/" class="btn btn-outline-success">View Details</a>
-                        </div>
+                    <img src="https://botanica-media-eu-west-1.s3.eu-west-1.amazonaws.com/images/categories/herbs.jpg" class="card-img-top" alt="Herbs" style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Herbs</h5>
+                        <p class="card-text">Fresh herbs for your kitchen garden.</p>
+                        <a href="{% url 'products:product_list_by_category' 4 %}" class="btn btn-outline-success">View Herbs</a>
                     </div>
                 </div>
             </div>
-            {% endfor %}
-        </div>
-        <div class="text-center mt-4">
-            <a href="/products/" class="btn btn-success">View All Plants</a>
+            <!-- Flowering Plants -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="https://botanica-media-eu-west-1.s3.eu-west-1.amazonaws.com/images/categories/flowering.jpg" class="card-img-top" alt="Flowering Plants" style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Flowering Plants</h5>
+                        <p class="card-text">Add color and fragrance to your space.</p>
+                        <a href="{% url 'products:product_list_by_category' 5 %}" class="btn btn-outline-success">View Flowering Plants</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Ferns -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="https://botanica-media-eu-west-1.s3.eu-west-1.amazonaws.com/images/categories/ferns.jpg" class="card-img-top" alt="Ferns" style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Ferns</h5>
+                        <p class="card-text">Lush and elegant foliage plants.</p>
+                        <a href="{% url 'products:product_list_by_category' 6 %}" class="btn btn-outline-success">View Ferns</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Cacti -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="https://botanica-media-eu-west-1.s3.eu-west-1.amazonaws.com/images/categories/cacti.jpg" class="card-img-top" alt="Cacti" style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Cacti</h5>
+                        <p class="card-text">Unique and easy-care desert plants.</p>
+                        <a href="{% url 'products:product_list_by_category' 7 %}" class="btn btn-outline-success">View Cacti</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Bonsai -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="https://botanica-media-eu-west-1.s3.eu-west-1.amazonaws.com/images/categories/bonsai.jpg" class="card-img-top" alt="Bonsai" style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Bonsai</h5>
+                        <p class="card-text">Miniature trees for artistic expression.</p>
+                        <a href="{% url 'products:product_list_by_category' 8 %}" class="btn btn-outline-success">View Bonsai</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>

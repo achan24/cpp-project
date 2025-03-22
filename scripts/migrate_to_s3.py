@@ -17,6 +17,37 @@ django.setup()
 
 from products.models import Plant
 
+# First-time S3 migration guide:
+"""
+1. First ensure your .env has the correct AWS credentials and bucket settings:
+   AWS_ACCESS_KEY_ID=your_access_key
+   AWS_SECRET_ACCESS_KEY=your_secret_key
+   AWS_STORAGE_BUCKET_NAME=botanica-media-eu-west-1
+   AWS_S3_REGION_NAME=eu-west-1
+
+2. Run the complete migration in this order:
+   
+   # Download category images from Unsplash
+   curl -L "image_url" -o static/images/categories/indoor.jpg
+   curl -L "image_url" -o static/images/categories/outdoor.jpg
+   ... (repeat for all category images)
+
+   # Run the migration script with all functions
+   if __name__ == '__main__':
+       main()  # This will run:
+       # - migrate_media_to_s3() for product images
+       # - migrate_static_to_s3() for static files
+       # - migrate_category_images() for category images
+
+   # After migration, update templates to use S3 URLs:
+   # Old: <img src="/static/images/categories/indoor.jpg">
+   # New: <img src="https://botanica-media-eu-west-1.s3.eu-west-1.amazonaws.com/categories/indoor.jpg">
+
+3. Verify all images are accessible through S3 URLs
+4. Update settings.py to use S3 as default storage
+5. Remove local media files (optional, keep as backup)
+"""
+
 def migrate_media_to_s3():
     """Migrate existing plant images from local storage to S3"""
     media_root = settings.MEDIA_ROOT
@@ -67,6 +98,23 @@ def migrate_static_to_s3():
     print("Uploading static files to S3...")
     upload_static_dir(static_dir)
 
+def migrate_category_images():
+    """Upload category images to S3"""
+    print("\n=== Migrating Category Images ===")
+    categories_dir = os.path.join(project_root, 'static', 'images', 'categories')
+    
+    for file in os.listdir(categories_dir):
+        if file.startswith('.'):  # Skip hidden files
+            continue
+            
+        local_path = os.path.join(categories_dir, file)
+        s3_path = f'images/categories/{file}'  # Fixed path to match S3 structure
+        
+        print(f"Uploading {file}...")
+        with open(local_path, 'rb') as f:
+            default_storage.save(s3_path, File(f))
+        print(f"✓ Successfully uploaded {file}")
+
 def main():
     print("Starting migration to S3...")
     
@@ -84,4 +132,4 @@ def main():
     print(f"Static URL: {settings.STATIC_URL}")
 
 if __name__ == '__main__':
-    main()
+    migrate_category_images()

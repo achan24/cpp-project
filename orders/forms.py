@@ -1,6 +1,6 @@
 from django import forms
 from .models import Order
-from eircode_validator_24203203 import EircodeValidator
+from eircode_pkg import EircodeValidator
 
 class OrderCreateForm(forms.ModelForm):
     class Meta:

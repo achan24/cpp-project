@@ -94,12 +94,8 @@ WSGI_APPLICATION = 'botanica.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('RDS_DB_NAME'),
-        'USER': os.environ.get('RDS_USERNAME'),
-        'PASSWORD': os.environ.get('RDS_PASSWORD'),
-        'HOST': os.environ.get('RDS_HOSTNAME'),
-        'PORT': os.environ.get('RDS_PORT'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -161,6 +157,7 @@ AWS_DEFAULT_ACL = None
 AWS_S3_ADDRESSING_STYLE = 'virtual'  # Required for newer S3 regions
 AWS_S3_SIGNATURE_VERSION = 's3v4'    # Required for eu-west-1 region
 AWS_QUERYSTRING_AUTH = True          # Enable querystring auth for private files
+AWS_QUERYSTRING_EXPIRE = 604800      # Set URL expiration to 7 days (in seconds)
 
 # Performance optimization for S3
 AWS_S3_OBJECT_PARAMETERS = {

@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from products.models import Category
 
 def home(request):
     """
     View for the homepage of the Botanica e-commerce platform.
     """
-    return render(request, 'home.html')
+    categories = Category.objects.all()
+    return render(request, 'home.html', {'categories': categories})
 
 def about(request):
     """
